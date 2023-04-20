@@ -16,7 +16,7 @@ userRoute.post('/', async (req: Request, res: Response): Promise<any> => {
         let user: IUsers | null = await usersModel.findOne({name: req.body.name});
         if(user === null){
 
-            if(typeof req.body.points == "undefined") return res.status(400).send("No points provided");
+            if(typeof req.body.points == "undefined") return res.status(200).send("No user found");
 
             const users = new usersModel({
                 name: req.body.name,
