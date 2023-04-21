@@ -7,11 +7,17 @@ import {questionsRoute} from './routes/questions';
 import bodyParser from 'body-parser';
 import {IQuestion} from './interfaces/schemas';
 import questionModel from './models/Questions';
-
-
+import cors from 'cors';
 
 dotenv.config();
 const app = express()
+
+const allowedOrigins = ['http://localhost:5173'];
+
+const optionsCors: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+app.use(cors(optionsCors));
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
