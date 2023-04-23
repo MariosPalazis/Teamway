@@ -3,7 +3,8 @@ import '../App.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { Navigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 interface LandingProps {
     
@@ -14,6 +15,7 @@ type GetUsersResponse = {
 };
 
 const Landing = () => {
+    const navigate = useNavigate()
 
     const [name, setName]  = useState<string>("");
     const [active, setActive]  = useState<boolean>(false);
@@ -31,14 +33,20 @@ const Landing = () => {
     const continueButton = async (event: React.MouseEvent<HTMLElement>) => {
         try{
             setError(false);
-            const { data, status } = await axios.post<GetUsersResponse | string>("https://localhost:9000/users", {name: name});
+            //const { data, status } = await axios.post<GetUsersResponse | string>("https://localhost:9000/users", {name: name});
+            const status = 200;
+            const data = "mm";
+            console.log(1)
             if(status !== 200){
+                console.log(2)
                 setError(true);
             }else{
                 if(typeof data === "string"){
-                    return <Navigate to="/questions" />;
+                    console.log(3)
+                    return navigate("/questions");
                 }else{
-                    return <Navigate to="/results" />;
+                    console.log(4)
+                    return navigate("/results");
                 }
             }
         }catch(err){
