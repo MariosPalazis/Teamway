@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import '../App.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import { Dispatch } from "redux"
+import { addUser } from '../store/actionCreators';
+import {  useDispatch } from "react-redux"
 
 interface LandingProps {
     
@@ -19,7 +21,11 @@ const Landing = () => {
 
     const [name, setName]  = useState<string>("");
     const [active, setActive]  = useState<boolean>(false);
-    const [error, setError]  = useState<boolean>(false);
+    const [error, setError]  = useState<string>("");
+
+
+    const dispatch: Dispatch<any> = useDispatch()
+
 
     const changeText = (event: React.ChangeEvent<HTMLInputElement> ) =>{
         setName(event.target.value);
@@ -29,28 +35,28 @@ const Landing = () => {
             setActive(true);
         }
     }
+    const saveUser = React.useCallback(
+        (user: IUser) => dispatch(addUser(user)),
+        [dispatch]
+    )
 
     const continueButton = async (event: React.MouseEvent<HTMLElement>) => {
         try{
-            setError(false);
-            //const { data, status } = await axios.post<GetUsersResponse | string>("https://localhost:9000/users", {name: name});
-            const status = 200;
-            const data = "mm";
-            console.log(1)
+            setError("");
+            const { data, status } = await axios.post<GetUsersResponse | string>("http://localhost:9000/users", {name: name});
             if(status !== 200){
-                console.log(2)
-                setError(true);
+                setError("Server Error");
             }else{
                 if(typeof data === "string"){
-                    console.log(3)
+                    saveUser({name: name});
                     return navigate("/questions");
                 }else{
-                    console.log(4)
+                    saveUser({name: data.name, points: data.points});
                     return navigate("/results");
                 }
             }
         }catch(err){
-            setError(true);
+            setError("Server Error");
         }
     }
 
@@ -63,7 +69,7 @@ const Landing = () => {
                 {
                 active ? <Button variant="outlined" color="success" className='proccedButton' onClick={continueButton}>Continue</Button> :  <Button variant="outlined" className='proccedButton' disabled>Continue</Button>
                 }
-                {error && <span className='error'>Server Error</span>}
+                {error!=="" && <span className='error'>Server Error</span>}
             </div>
         </div>
     );
