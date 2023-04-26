@@ -6,7 +6,7 @@ import {IQuestion} from '../interfaces/schemas';
 
 dotenv.config();
 
-export const questionsRoute = Router();
+const questionsRoute = Router();
 
 questionsRoute.get('/', async (req: Request, res: Response): Promise<any> => { 
     try{
@@ -17,3 +17,5 @@ questionsRoute.get('/', async (req: Request, res: Response): Promise<any> => {
     }
 
 });
+
+export {questionsRoute};

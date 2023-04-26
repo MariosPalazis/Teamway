@@ -6,7 +6,7 @@ import {IUsers} from '../interfaces/schemas';
 
 dotenv.config();
 
-export const userRoute = Router();
+const userRoute = Router();
 
 userRoute.post('/', async (req: Request, res: Response): Promise<any> => { 
 
@@ -30,3 +30,5 @@ userRoute.post('/', async (req: Request, res: Response): Promise<any> => {
     }
 
 });
+
+export {userRoute};

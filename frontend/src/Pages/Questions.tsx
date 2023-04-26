@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import data from './data.json';
 import SingleQuestion from '../Components/SingleQuestion';
 import { QuestionsType } from '../interfaces/Questions';
 import Button from '@mui/material/Button';
@@ -34,8 +33,13 @@ function Questions() {
 
   useEffect(()=>{
     const loadData = async() =>{
-      //const { data, status } = await axios.get<GetUsersResponse | string>("https://localhost:9000/users", {name: name});
-      setQuestions(data)
+      try{
+        const { data, status } = await axios.get<QuestionsType[]>("http://localhost:9000/api/questions");
+        setQuestions(data)
+      }catch(err){
+
+      }
+
     }
     loadData();
   },[])

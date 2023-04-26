@@ -43,7 +43,7 @@ const Landing = () => {
     const continueButton = async (event: React.MouseEvent<HTMLElement>) => {
         try{
             setError("");
-            const { data, status } = await axios.post<GetUsersResponse | string>("http://localhost:9000/users", {name: name});
+            const { data, status } = await axios.post<GetUsersResponse | string>("http://localhost:9000/api/users", {name: name});
             if(status !== 200){
                 setError("Server Error");
             }else{

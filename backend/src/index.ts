@@ -1,36 +1,10 @@
-import express from 'express';
 import * as mongoose from 'mongoose'
-import * as dotenv from "dotenv";
 import { MongooseOptions } from './interfacesMain';
-import {userRoute} from './routes/users';
-import {questionsRoute} from './routes/questions';
-import bodyParser from 'body-parser';
 import {IQuestion} from './interfaces/schemas';
 import questionModel from './models/Questions';
-import cors from 'cors';
+import app from './app';
 
-dotenv.config();
-const app = express()
 
-const allowedOrigins = ['http://localhost:5173'];
-
-const optionsCors: cors.CorsOptions = {
-  origin: allowedOrigins
-};
-app.use(cors(optionsCors));
-
-app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-const PORT = 9000
-
-app.get('/', (req: express.Request, res: express.Response) => {
-    res.setHeader('Content-Type', 'text/html')
-    res.end('<h1>Hello World</h1>')
-})
-
-app.use('/users', userRoute);
-app.use('/questions', questionsRoute);
 
 
 const url:any = process.env.DB_CONNECT;
@@ -158,5 +132,6 @@ mongoose.connect(url, options)
   })
   .catch(err => console.error(err));
 
+const PORT = 9000
 
 app.listen(PORT, () => console.log(`app running on port ${PORT}`))
