@@ -1,8 +1,18 @@
-version: '3'
+version: '3.8'
 services:
-  mongodb_container:
-    image: mongo:6
+  backend:
+    # to build an image based on Dockerfile
+    # it looks in this folder to find Dockerfile to build an image
+    build: ../backend
+    # the port that we want to publish for backend
+    ports:
+      - "9000:9000"
+    # depends_on means it will start our backend container once mongo-container is  up and running.
+    depends_on:
+      - mongodb
+  mongodb:
     container_name: mongodb
+    image: mongo:6
     environment:
       MONGO_INITDB_DATABASE: Teamway
       MONGO_INITDB_ROOT_USERNAME: root
@@ -12,6 +22,11 @@ services:
     volumes:
       - mongodb_data_container_teamway:/data/db
     #restart: always
+
+
+
+
+
 
 volumes:
   mongodb_data_container_teamway:

@@ -3,11 +3,14 @@ import { MongooseOptions } from './interfacesMain';
 import {IQuestion} from './interfaces/schemas';
 import questionModel from './models/Questions';
 import app from './app';
+import  dotenv from "dotenv";
 
 
 
+dotenv.config();
 
-const url:any = process.env.DB_CONNECT;
+const url:string = String(process.env.DB_CONNECT);
+console.log(url)
 const options: MongooseOptions = {
     useNewUrlParser : true,
     useUnifiedTopology: true,

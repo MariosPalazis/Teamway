@@ -15,7 +15,9 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use('/api/users', userRoute);
 app.use('/api/questions', questionsRoute);
 
-
+app.get('/',(req, res)=>{
+    return res.status(200)
+})
 
 
 export default app;
