@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "prod": "node build/index.js"
   },
   "keywords": [],
   "author": "",

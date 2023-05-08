@@ -6,17 +6,15 @@ import app from './app';
 import  dotenv from "dotenv";
 
 
-
 dotenv.config();
 
-const url:string = String(process.env.DB_CONNECT);
-console.log(url)
+console.log(process.env.DB_CONNECT)
 const options: MongooseOptions = {
     useNewUrlParser : true,
     useUnifiedTopology: true,
     dbName: 'Teamway',
 }
-mongoose.connect(url, options)
+mongoose.connect(String(process.env.DB_CONNECT), options)
   .then( async () => {
     console.log('Connected to the Database.');
     try{

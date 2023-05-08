@@ -53,7 +53,7 @@ function Questions() {
     setContinueButton(false);
     if(questionNumber+1===questions.length){
       try{
-        const { status } = await axios.post<GetUsersResponse | string>("http://localhost:9000/users", {name: name, points: points});
+        const { status } = await axios.post<GetUsersResponse | string>("http://localhost:9000/api/users", {name: name, points: points});
         if (status!==200) return navigate("/");
       }catch(err){
         return navigate("/");
@@ -69,9 +69,11 @@ function Questions() {
   if(questions.length===0){
     return <></>;
   }
+  /*
   if(name===""){
     return navigate("/");
   }
+  */
   return (
     <div className='App'>
       <div className='questionsPanel'>
